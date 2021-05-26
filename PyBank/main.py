@@ -19,6 +19,8 @@ with open("/Users/jsb/GitHub/Python-Challenge/PyBank/Resources/budget_data.csv")
 #   headerline = budget_data.next()
     csv_file = csv.reader(budget_data, delimiter = ',')
     headings = next(csv_file)
+    first_row = next(csv_file)
+    
 
     for row in csv_file:
         total_months += 1
@@ -40,3 +42,17 @@ with open("/Users/jsb/GitHub/Python-Challenge/PyBank/Resources/budget_data.csv")
     # calculate average change
     average_change = sum(change_monthly) / total_months
 
+output = (
+    f"Financial Analysis\n"
+    f"-------------------------------------------\n"
+    f"Total Months : {total_months}\n"
+    f"Total Amount : {total_amount}\n"
+    f"Average Change : {average_change}\n "
+    f"Greatest Increase in Profits : {greatest_increase['month']} (${greatest_increase['value']})\n "
+    f"Greatest Decrease in Profits : {greatest_decrease['month']} (${greatest_decrease['value']})\n"
+)
+#print output to terminal
+print(output)
+
+with open("/Users/jsb/GitHub/Python-Challenge/PyBank/Analysis/output.txt", "w") as txt_file:
+    txt_file.write(output)
