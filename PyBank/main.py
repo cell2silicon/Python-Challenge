@@ -12,26 +12,29 @@ greatest_decrease = {"month":"","value": 0}
 change_profit_loss = 0
 change_previous = 0
 
+# set path for the file
+csvpath = os.path.join("/Users/jsb/GitHub/Python-Challenge/PyBank/Resources/budget_data.csv")
 
-# opening data file
-with open("/Users/jsb/GitHub/Python-Challenge/PyBank/Resources/budget_data.csv") as budget_data:
+# opening and reading csv file
 
-#   headerline = budget_data.next()
+with open(csvpath, newline='') as budget_data:
+
+#   reading file by skipping header
     csv_file = csv.reader(budget_data, delimiter = ',')
-    headings = next(csv_file)
-    first_row = next(csv_file)
-    
+    next(csv_file)
 
+    # to calculate the number of months
     for row in csv_file:
         total_months += 1
         total_amount += int(row[1])
 
+        # finding the values for greatest increase and greatest decrease
         if greatest_increase["value"] < int(row[1]):
             greatest_increase["month"] = row[0]
-            greatest_increase["value"] = int(row[1])
+            greatest_increase["value"] = int(row[1]) - change_previous
         if greatest_decrease["value"] > int(row[1]):
             greatest_decrease["month"] = row[0]
-            greatest_decrease["value"] = int(row[1])
+            greatest_decrease["value"] = int(row[1]) -change_previous
 
     # calculate the chnages in the data
 
@@ -40,8 +43,10 @@ with open("/Users/jsb/GitHub/Python-Challenge/PyBank/Resources/budget_data.csv")
         change_previous = int(row[1])
 
     # calculate average change
-    average_change = sum(change_monthly) / total_months
+    # since the first element subtracts only 0, so remove the first element from following calculation
+    average_change = sum(change_monthly[1:]) / len(change_monthly[1:])
 
+# declaring output values
 output = (
     f"Financial Analysis\n"
     f"-------------------------------------------\n"
@@ -54,5 +59,6 @@ output = (
 #print output to terminal
 print(output)
 
+# printing output value in .txt format to analysis folder
 with open("/Users/jsb/GitHub/Python-Challenge/PyBank/Analysis/output.txt", "w") as txt_file:
     txt_file.write(output)
