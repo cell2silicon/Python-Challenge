@@ -1,5 +1,7 @@
 # Python-Challenge
-Formatting data using python
+
+Formatting data using csv module in python
+
 # PyBank Data.
 * I started this challenge by first calculating the no of row without the header, as this would the number of the months.
 * Then I calculated the total of the values in profit/losses column. This would be the net amount.
